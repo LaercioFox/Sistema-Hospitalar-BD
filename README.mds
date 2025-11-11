@@ -1,0 +1,63 @@
+# 🏥 Sistema Hospitalar - Banco de Dados Relacional (UNIASSELVI)
+
+## 📘 Descrição
+Este projeto apresenta a **modelagem e implementação de um banco de dados relacional** para um **Sistema Hospitalar Integrado**, desenvolvido como parte da disciplina **Banco de Dados Relacional**, do curso **Sistemas de Informação – Turma 001**, no **Centro Universitário Leonardo da Vinci (UNIASSELVI)**.
+
+O sistema foi projetado com base em situações reais de gestão hospitalar, buscando resolver problemas comuns de **armazenamento, acesso e integração de informações** entre pacientes, médicos, consultas e internações.
+
+---
+
+## 🧩 Objetivos
+- Criar um **modelo relacional normalizado** (3ª Forma Normal);
+- Facilitar a **integração entre setores hospitalares**;
+- Garantir **consistência e integridade referencial** dos dados;
+- Permitir consultas analíticas, como número de atendimentos por especialidade e pacientes internados.
+
+---
+
+## 🏗️ Estrutura do Banco de Dados
+O banco é composto pelas seguintes tabelas principais:
+
+| Tabela | Descrição |
+|--------|------------|
+| **Paciente** | Armazena dados dos pacientes, como nome, CPF e endereço. |
+| **Médico** | Registra os profissionais, seus CRMs e especialidades. |
+| **Especialidade** | Lista as áreas médicas do hospital. |
+| **Consulta** | Registra os atendimentos realizados. |
+| **Setor** | Define os setores do hospital, como emergência e UTI. |
+| **Internação** | Controla as internações de pacientes. |
+
+---
+
+## 💾 Tecnologias Utilizadas
+- **Oracle SQL Developer** (compatível com Oracle Database)
+- **Linguagem SQL**
+- **Modelo Relacional**
+- **Chaves Primárias e Estrangeiras**
+
+---
+
+## 🚀 Como Executar
+1. Baixe o arquivo [`Sistema_Hospitalar_Banco_de_Dados.sql`](./Sistema_Hospitalar_Banco_de_Dados.sql);
+2. Abra o **Oracle SQL Developer**;
+3. Conecte-se ao seu banco de dados;
+4. Copie e execute o conteúdo do arquivo (F5);
+5. As tabelas, dados e consultas estarão disponíveis para uso.
+
+---
+
+## 📊 Consultas de Exemplo
+```sql
+-- Listar todas as consultas realizadas
+SELECT c.id_consulta, p.nome AS paciente, m.nome AS medico, e.nome_especialidade, c.data_consulta, c.diagnostico
+FROM Consulta c
+JOIN Paciente p ON c.id_paciente = p.id_paciente
+JOIN Medico m ON c.id_medico = m.id_medico
+JOIN Especialidade e ON m.id_especialidade = e.id_especialidade;
+
+-- Pacientes atualmente internados
+SELECT p.nome, s.nome_setor, i.data_entrada
+FROM Internacao i
+JOIN Paciente p ON i.id_paciente = p.id_paciente
+JOIN Setor s ON i.id_setor = s.id_setor
+WHERE i.data_saida IS NULL;
